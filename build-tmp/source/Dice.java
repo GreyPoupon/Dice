@@ -1,14 +1,30 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class Dice extends PApplet {
+
 Die fate;
 int diceSum;
 int diceTotal = 0;
 float diceAverage = 0;
 float clickTime = 1;
-void setup()
+public void setup()
 {
 	size(730,600);
 	noLoop();
 }
-void draw()
+public void draw()
 {
 	background(0);
 	diceSum = 0;
@@ -22,10 +38,10 @@ void draw()
 			fate.show();
 		}
 	}
-	diceAverage = (diceAverage + float(diceTotal))/clickTime;
+	diceAverage = (diceAverage + PApplet.parseFloat(diceTotal))/clickTime;
 	fate.info();
 }
-void mousePressed()
+public void mousePressed()
 {
 	clickTime++;
 	redraw();
@@ -39,7 +55,7 @@ class Die //models one single dice cube
 		diceY = y;
 		diceValue = (int)(Math.random()*6)+1;
 	}
-	void show()
+	public void show()
 	{
 		fill(255);
 		rect(diceX, diceY, 50, 50);
@@ -84,7 +100,7 @@ class Die //models one single dice cube
 			ellipse(diceX + 37, diceY + 13, 5, 5);
 		}
 	}
-	void info()
+	public void info()
 	{
 		stroke(255);
 		fill(255);
@@ -94,4 +110,13 @@ class Die //models one single dice cube
 		text("Average: " + diceAverage, 10, 566);
 		stroke(0);
 	}
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "Dice" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
